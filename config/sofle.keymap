@@ -57,14 +57,14 @@
         };
 
         // Alt+Tab thật: giữ LALT lúc xoay để overlay GNOME hiện ra. Không dùng
-        // timeout — overlay treo chừng nào còn giữ LOWER; nhả LOWER (thoát lớp
-        // 1) mới nhả LALT và chốt cửa sổ. ignored-layers = LOWER để đứng trên
-        // lớp đó không bị cắt; vị trí 53 (LOWER) bỏ qua ở key-positions.
+        // timeout — overlay treo chừng nào còn giữ LOWER. Module tri-state v0.3
+        // bỏ qua mọi lần TẮT lớp, nên KHÔNG được đưa vị trí 53 (LOWER) vào
+        // ignored-key-positions: phải để sự kiện NHẢ LOWER cắt tri-state, nhả
+        // LALT và chốt cửa sổ. (Bản d048b77 ignore 53 → overlay treo mãi.)
         swapper: swapper {
             compatible = "zmk,behavior-tri-state";
             #binding-cells = <0>;
             bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
-            ignored-key-positions = <53>;
             ignored-layers = <LOWER>;
         };
 
