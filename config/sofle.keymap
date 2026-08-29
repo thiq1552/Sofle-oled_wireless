@@ -154,8 +154,8 @@
                           &trans        &trans        &trans        &trans        &trans    &trans  &trans     &trans    &trans    &trans
             >;
 
-            // núm trái: Vol +/-  |  núm phải: PgUp/PgDn
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+            // núm trái: Vol +/-  |  núm phải: Super+Right / Super+Left (chia-man)
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp LG(RIGHT) LG(LEFT)>;
         };
 
         adjust_layer {
