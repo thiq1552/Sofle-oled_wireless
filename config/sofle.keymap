@@ -55,6 +55,27 @@
             bindings = <&msc MOVE_Y(-40)>, <&msc MOVE_Y(40)>;
             tap-ms = <32>;
         };
+
+        // Alt+Tab thật: giữ LALT trong suốt lúc xoay để overlay chuyển cửa sổ
+        // của GNOME hiện ra và lướt được cả danh sách. Ngừng xoay 600ms thì
+        // nhả LALT -> chốt cửa sổ đang chọn. Vị trí 53 là phím LOWER (ngón cái
+        // trái), cho vào danh sách bỏ qua để bấm/nhả LOWER không cắt ngang.
+        swapper: swapper {
+            compatible = "zmk,behavior-tri-state";
+            #binding-cells = <0>;
+            bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+            ignored-key-positions = <53>;
+            timeout-ms = <600>;
+        };
+
+        // Xoay thuận: Alt+Tab tiến. Xoay ngược: Shift+Tab, cộng với LALT mà
+        // swapper đang giữ thành Alt+Shift+Tab -> lùi lại trong danh sách.
+        enc_swap: enc_swap {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&swapper>, <&kp LS(TAB)>;
+            tap-ms = <32>;
+        };
     };
 
     // Activate ADJUST layer by pressing raise and lower
@@ -111,8 +132,8 @@
                       &trans     &trans       &trans    &trans     &trans    &trans  &trans    &trans    &trans     &trans
             >;
 
-            // núm trái: con trỏ trái/phải  |  núm phải: PgUp/PgDn
-            sensor-bindings = <&enc_mmv_h &inc_dec_kp PG_UP PG_DN>;
+            // núm trái: con trỏ trái/phải  |  núm phải: chuyển cửa sổ (Alt+Tab)
+            sensor-bindings = <&enc_mmv_h &enc_swap>;
         };
 
         raise_layer {
