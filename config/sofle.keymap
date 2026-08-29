@@ -56,16 +56,16 @@
             tap-ms = <32>;
         };
 
-        // Alt+Tab thật: giữ LALT trong suốt lúc xoay để overlay chuyển cửa sổ
-        // của GNOME hiện ra và lướt được cả danh sách. Ngừng xoay 600ms thì
-        // nhả LALT -> chốt cửa sổ đang chọn. Vị trí 53 là phím LOWER (ngón cái
-        // trái), cho vào danh sách bỏ qua để bấm/nhả LOWER không cắt ngang.
+        // Alt+Tab thật: giữ LALT lúc xoay để overlay GNOME hiện ra. Không dùng
+        // timeout — overlay treo chừng nào còn giữ LOWER; nhả LOWER (thoát lớp
+        // 1) mới nhả LALT và chốt cửa sổ. ignored-layers = LOWER để đứng trên
+        // lớp đó không bị cắt; vị trí 53 (LOWER) bỏ qua ở key-positions.
         swapper: swapper {
             compatible = "zmk,behavior-tri-state";
             #binding-cells = <0>;
             bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
             ignored-key-positions = <53>;
-            timeout-ms = <600>;
+            ignored-layers = <LOWER>;
         };
 
         // Xoay thuận: Alt+Tab tiến. Xoay ngược: Shift+Tab, cộng với LALT mà
