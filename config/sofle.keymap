@@ -110,8 +110,8 @@
                       &none         &kp LEFT_GUI  &kp LALT  &mo LOWER  &kp SPACE     &kp ENTER  &mo RAISE  &kp BACKSPACE  &kp DELETE  &kp RCTRL
             >;
 
-            // núm trái: con trỏ lên/xuống  |  núm phải: PgUp/PgDn
-            sensor-bindings = <&enc_mmv_v &inc_dec_kp PG_UP PG_DN>;
+            // núm trái: con trỏ lên/xuống  |  núm phải: PgDn/PgUp (đảo chiều 29/08)
+            sensor-bindings = <&enc_mmv_v &inc_dec_kp PG_DN PG_UP>;
         };
 
         lower_layer {
