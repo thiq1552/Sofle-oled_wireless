@@ -16,29 +16,44 @@
 #define RAISE 2
 #define ADJUST 3
 
+// Mặc định &mmv tăng tốc dần trong 300ms. Nấc xoay encoder chỉ kéo dài vài chục
+// ms nên con trỏ sẽ mãi kẹt ở đoạn đầu đường tăng tốc, nhích được ~2px. Tắt gia
+// tốc để đạt tốc độ tối đa ngay từ sự kiện đầu tiên.
+&mmv {
+    acceleration-exponent = <0>;
+    time-to-max-speed-ms = <0>;
+};
+
+&msc {
+    acceleration-exponent = <0>;
+    time-to-max-speed-ms = <0>;
+};
+
 / {
     // Núm xoay trái điều khiển con trỏ chuột.
-    // tap-ms quyết định mỗi nấc xoay con trỏ đi bao xa (600 đơn vị/giây).
+    // Sự kiện sinh ra mỗi 16ms, nên tap-ms = 32 cho ra 2 sự kiện mỗi nấc xoay.
+    // Con trỏ: 1500 đơn vị/giây x 0,032s ~ 48px mỗi nấc (~960px một vòng xoay).
+    // Muốn con trỏ chạy nhanh/chậm hơn thì sửa 1500, không sửa tap-ms.
     behaviors {
         enc_mmv_v: enc_mmv_v {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&mmv MOVE_DOWN>, <&mmv MOVE_UP>;
-            tap-ms = <30>;
+            bindings = <&mmv MOVE_Y(1500)>, <&mmv MOVE_Y(-1500)>;
+            tap-ms = <32>;
         };
 
         enc_mmv_h: enc_mmv_h {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&mmv MOVE_RIGHT>, <&mmv MOVE_LEFT>;
-            tap-ms = <30>;
+            bindings = <&mmv MOVE_X(1500)>, <&mmv MOVE_X(-1500)>;
+            tap-ms = <32>;
         };
 
         enc_scrl: enc_scrl {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-            tap-ms = <100>;
+            bindings = <&msc MOVE_Y(-40)>, <&msc MOVE_Y(40)>;
+            tap-ms = <32>;
         };
     };
 
